@@ -1,0 +1,46 @@
+import pygame
+import random
+
+pygame.init()
+
+width, height = 500, 300
+screen = pygame.display.set_mode((width, height))
+pygame.display.set_caption("Shake on Mouse Click")
+
+x, y = width // 2, height // 2
+shake = 0
+
+clock = pygame.time.Clock()
+
+running = True
+while running:
+    clock.tick(60)   # Run game at 60 FPS
+    screen.fill((0, 0, 0))   # Black background
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+        # Start shake when mouse clicked
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            shake = 15
+
+    # Shake effect
+    if shake > 0:
+        offset_x = random.randint(-8, 8)
+        offset_y = random.randint(-8, 8)
+        shake -= 1
+    else:
+        offset_x = 0
+        offset_y = 0
+
+    # Draw rectangle
+    pygame.draw.rect(
+        screen,
+        (255, 0, 0),
+        (x + offset_x, y + offset_y, 50, 50)
+    )
+
+    pygame.display.flip()
+
+pygame.quit()
